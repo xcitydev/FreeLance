@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        VT323: ["VT323", "regular"],
+        Abril: ["IBM Plex Mono", "regular"],
+      },
+    },
   },
   plugins: [],
 };

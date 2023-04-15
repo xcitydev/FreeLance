@@ -1,0 +1,63 @@
+import React, { useEffect, useState } from "react";
+import nothing from "../../assets/nothing.svg";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import ClientItems from "../../components/clientItems";
+
+const Clients = () => {
+  const [clients, setClients] = useState();
+  const getClients = async () => {
+    try {
+      const tronweb = window.tronWeb;
+      const contract = await window.tronWeb
+        .contract()
+        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      const arrayLength = await contract.getClientLength().call();
+      const val = tronweb.toDecimal(arrayLength);
+      let clientList = [];
+      for (let index = 0; index < val; index++) {
+        const freeList = await contract.listClient(index).call();
+        console.log(freeList);
+        clientList.push(freeList);
+      }
+      setClients(clientList);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getClients();
+  }, []);
+  return (
+    <div className="bg-black/20 h-full px-3">
+      <div className="flex bg-white py-1 w-[300px] space-x-2 px-4 items-center">
+        <MagnifyingGlassIcon className="w-6 h-6 text-black" />
+        <input
+          type="text"
+          placeholder="search for clients"
+          className="w-full py-1 px-2 text-sm"
+        />
+      </div>
+      <div>
+        {!clients ? (
+          <>
+            <div className="flex space-y-3 flex-col h-[70vh] items-center justify-center">
+              <img src={nothing} alt="no clients" className="w-2/12" />
+              <p className="text-2xl">No client has been created</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="grid grid-cols-6">
+              {clients?.map((item, i) => (
+                <div key={i}>
+                  <ClientItems item={item} />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Clients;
