@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import nothing from "../../assets/nothing.svg";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import ClientItems from "../../components/clientItems";
+import { toast } from "react-hot-toast";
 
 const Clients = () => {
   const [clients, setClients] = useState();
   const getClients = async () => {
+    const notify = toast.loading("⏳ loading clients...");
     try {
       const tronweb = window.tronWeb;
       const contract = await window.tronWeb
@@ -20,7 +22,14 @@ const Clients = () => {
         clientList.push(freeList);
       }
       setClients(clientList);
-    } catch (error) {}
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
 
   useEffect(() => {

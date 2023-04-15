@@ -4,6 +4,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import profileImage from "../../assets/profile.png";
 import freelancerImage from "../../assets/resume.svg";
 import { firebaseStorage } from "../../utils/utils";
+import { toast } from "react-hot-toast";
 
 const BecomeAFreelancer = () => {
   const [imageProfile, setImageProfile] = useState();
@@ -70,6 +71,8 @@ const BecomeAFreelancer = () => {
 
   const handleDone = async (e) => {
     e.preventDefault();
+    const notify = toast.loading("⏳ signing up as freelancer...");
+
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -79,6 +82,9 @@ const BecomeAFreelancer = () => {
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
       const passwordHash = await tronweb.sha3(freeLancerDetails.password);
+      toast.loading("✍ Sign Transaction", {
+        id: notify,
+      });
       const hash = await contract
         .registerFreeLancer(
           freeLancerDetails.name,
@@ -95,8 +101,15 @@ const BecomeAFreelancer = () => {
           feeLimit: 10000000000,
           callValue: 0,
         });
+      toast.success("✅ done", {
+        id: notify,
+      });
       console.log(hash);
-    } catch (error) {}
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
   return (
     <div className="bg-[#1b1a1d] h-screen overflow-hidden text-white">

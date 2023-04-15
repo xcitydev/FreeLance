@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import JobDescription from "./components/JobDescription";
+import Notification from "./components/notification";
 import BecomeAClient from "./pages/client/becomeAClient";
 import Dashboard from "./pages/dashboard/dashboard";
 import Explore from "./pages/explore/explore";
@@ -11,6 +12,7 @@ import Login from "./pages/login/login";
 function App() {
   return (
     <>
+      <Notification />
       <Router>
         <Routes>
           <Route element={<LandingPage />} path="/" />

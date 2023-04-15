@@ -3,22 +3,33 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import nothing from "../../assets/jobnotfound.svg";
 import JobItems from "../../components/jobItems";
 import { generatePath, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Jobs = () => {
   const [job, setJob] = useState();
   const filterJobs = async () => {
-    const contract = await window.tronWeb
-      .contract()
-      .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+    const notify = toast.loading("⏳ loading jobs...");
+    try {
+      const contract = await window.tronWeb
+        .contract()
+        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
 
-    const jobId = await contract.jobID().call();
-    const jobs = [];
-    for (let index = 0; index < jobId; index++) {
-      const job = await contract.jobs(index + 1).call();
-      jobs.push(job);
+      const jobId = await contract.jobID().call();
+      const jobs = [];
+      for (let index = 0; index < jobId; index++) {
+        const job = await contract.jobs(index + 1).call();
+        jobs.push(job);
+      }
+
+      setJob(jobs);
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
     }
-
-    setJob(jobs);
   };
 
   const navigate = useNavigate();

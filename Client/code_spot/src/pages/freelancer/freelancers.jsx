@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import nothing from "../../assets/lancenotfound.svg";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import FreelancerItems from "../../components/freelancerItems";
+import { toast } from "react-hot-toast";
 
 const Freelancers = () => {
   const [lancers, setLancers] = useState();
   const getFreeLancers = async () => {
+    const notify = toast.loading("⏳ loading freelancers...");
     try {
       const tronweb = window.tronWeb;
       const contract = await window.tronWeb
@@ -19,7 +21,14 @@ const Freelancers = () => {
         freeLancers.push(freeList);
       }
       setLancers(freeLancers);
-    } catch (error) {}
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
 
   useEffect(() => {

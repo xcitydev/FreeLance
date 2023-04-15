@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,7 @@ export default function BasicModal() {
   const handleClose = () => setOpen(false);
 
   const createJob = async () => {
+    const notify = toast.loading("⏳creating job...");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -38,14 +40,24 @@ export default function BasicModal() {
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
       const budget = await tronweb.toSun(jobDetails.budget);
+      toast.success("✍ Sign Transaction..", {
+        id: notify,
+      });
       const hash = await contract
         .createJob(jobDetails.des, jobDetails.title, deadline, budget)
         .send({
           feeLimit: 10000000000,
           callValue: budget,
         });
+      toast.success("✅ done", {
+        id: notify,
+      });
       console.log(hash);
-    } catch (error) {}
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
 
   return (

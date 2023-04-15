@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import client from "../../assets/client.svg";
 import profileImage from "../../assets/profile.png";
 import { firebaseStorage } from "../../utils/utils";
+import { toast } from "react-hot-toast";
 
 const BecomeAClient = () => {
   const [imageProfile, setImageProfile] = useState();
@@ -51,6 +52,7 @@ const BecomeAClient = () => {
   };
 
   const handleDone = async () => {
+    const notify = toast.loading("⏳ signing up as client...");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -59,6 +61,9 @@ const BecomeAClient = () => {
       const contract = await window.tronWeb
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      toast.loading("✍ Sign Transaction", {
+        id: notify,
+      });
       const passwordHash = await tronweb.sha3(clientDetails.password);
       const hash = await contract
         .registerClient(
@@ -73,7 +78,14 @@ const BecomeAClient = () => {
           callValue: 0,
         });
       console.log(hash);
-    } catch (error) {}
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
   return (
     <div className="bg-[#1b1a1d] h-screen overflow-hidden text-white">

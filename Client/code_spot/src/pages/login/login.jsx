@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/login.svg";
 
@@ -6,6 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleLogin = async () => {
+    const notify = toast.loading("⏳ logging in....");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -16,14 +18,19 @@ const Login = () => {
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
       const hash = await contract.login(password).call();
-      console.log(hash);
       if (hash) {
+        toast.success("✅ done", {
+          id: notify,
+        });
         navigate("/dashboard", {
           state: {
             addy: address,
           },
         });
       } else {
+        toast.error("❌ user does not exist", {
+          id: notify,
+        });
         console.log("wrong password");
       }
     } catch (error) {}

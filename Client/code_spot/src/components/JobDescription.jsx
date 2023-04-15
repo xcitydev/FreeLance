@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useLocation } from "react-router-dom";
 import jobImage from "../assets/jobdes.svg";
 
@@ -19,6 +20,7 @@ const JobDescription = () => {
   };
 
   const acceptJob = async () => {
+    const notify = toast.loading("⏳ accepting job...");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -27,15 +29,26 @@ const JobDescription = () => {
       const contract = await tronweb
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      toast.loading("✍ Sign Transaction", {
+        id: notify,
+      });
       const hash = await contract.acceptJob(location.state.jobId).send({
         feeLimit: 10000000000,
         callValue: 0,
       });
+      toast.success("✅ done", {
+        id: notify,
+      });
       console.log(hash);
-    } catch (error) {}
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
 
   const isCompleted = async () => {
+    const notify = toast.loading("⏳ chaning job status...");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -44,14 +57,25 @@ const JobDescription = () => {
       const contract = await tronweb
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      toast.loading("✍ Sign Transaction", {
+        id: notify,
+      });
       const hash = await contract.isCompleted(location.state.jobId).send({
         feeLimit: 10000000000,
         callValue: 0,
       });
       console.log(hash);
-    } catch (error) {}
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
   const notCompleted = async () => {
+    const notify = toast.loading("⏳ changing job status...");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -60,15 +84,26 @@ const JobDescription = () => {
       const contract = await tronweb
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      toast.loading("✍ Sign Transaction", {
+        id: notify,
+      });
       const hash = await contract.isNotComplete(location.state.jobId).send({
         feeLimit: 10000000000,
         callValue: 0,
       });
+      toast.success("✅ done", {
+        id: notify,
+      });
       console.log(hash);
-    } catch (error) {}
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
 
   const releaseFunds = async () => {
+    const notify = toast.loading("⏳ releasing funds...");
     try {
       await window?.tronLink?.request({
         method: "tron_requestAccounts",
@@ -77,12 +112,22 @@ const JobDescription = () => {
       const contract = await tronweb
         .contract()
         .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      toast.loading("✍ Sign Transaction", {
+        id: notify,
+      });
       const hash = await contract.releaseFunds(location.state.jobId).send({
         feeLimit: 10000000000,
         callValue: 0,
       });
       console.log(hash);
-    } catch (error) {}
+      toast.success("Released💲", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
+    }
   };
 
   useEffect(() => {

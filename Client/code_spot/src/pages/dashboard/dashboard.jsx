@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useLocation } from "react-router-dom";
 import Client from "../../components/Client";
 import Lancer from "../../components/lancer";
@@ -11,40 +12,62 @@ const Dashboard = () => {
   const [details, setDetails] = useState({});
 
   const getType = async () => {
-    const contract = await window.tronWeb
-      .contract()
-      .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
-    const type = await contract.clients(location.state.addy.base58).call();
-    const type1 = await contract.freelancers(location.state.addy.base58).call();
-    if (type.name == "") {
-      setType("freelance");
-      setDetails(type1);
-    } else {
-      setType("client");
-      setDetails(type);
+    const notify = toast.loading("⏳ loading jobs...");
+    try {
+      const contract = await window.tronWeb
+        .contract()
+        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+      const type = await contract.clients(location.state.addy.base58).call();
+      const type1 = await contract
+        .freelancers(location.state.addy.base58)
+        .call();
+      if (type.name == "") {
+        setType("freelance");
+        setDetails(type1);
+      } else {
+        setType("client");
+        setDetails(type);
+      }
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
     }
   };
 
   const filterJobs = async () => {
-    const contract = await window.tronWeb
-      .contract()
-      .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+    const notify = toast.loading("⏳ loading jobs...");
+    try {
+      const contract = await window.tronWeb
+        .contract()
+        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
 
-    const jobId = await contract.jobID().call();
+      const jobId = await contract.jobID().call();
 
-    const clientJobs = [];
-    const lancerJobs = [];
-    for (let index = 0; index < jobId; index++) {
-      const job = await contract.jobs(index + 1).call();
-      console.log(location.state.addy);
-      if (job.client == location.state.addy.hex) {
-        clientJobs.push(job);
+      const clientJobs = [];
+      const lancerJobs = [];
+      for (let index = 0; index < jobId; index++) {
+        const job = await contract.jobs(index + 1).call();
+        console.log(location.state.addy);
+        if (job.client == location.state.addy.hex) {
+          clientJobs.push(job);
+        }
+        if (job.freelancer == location.state.addy.hex) {
+          lancerJobs.push(job);
+        }
+        setclientJob(clientJobs);
+        setlancerJob(lancerJobs);
       }
-      if (job.freelancer == location.state.addy.hex) {
-        lancerJobs.push(job);
-      }
-      setclientJob(clientJobs);
-      setlancerJob(lancerJobs);
+      toast.success("✅ done", {
+        id: notify,
+      });
+    } catch (error) {
+      toast.error(`❌ ${error.message}`, {
+        id: notify,
+      });
     }
   };
 
