@@ -4,13 +4,22 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCqdWzSNoLBXlhithxCFr3YkecTexmXf5A",
+//   authDomain: "codespot-fecfe.firebaseapp.com",
+//   projectId: "codespot-fecfe",
+//   storageBucket: "codespot-fecfe.appspot.com",
+//   messagingSenderId: "764583121213",
+//   appId: "1:764583121213:web:09134ce560a68946d97554",
+// };
 const firebaseConfig = {
-  apiKey: "AIzaSyCqdWzSNoLBXlhithxCFr3YkecTexmXf5A",
-  authDomain: "codespot-fecfe.firebaseapp.com",
-  projectId: "codespot-fecfe",
-  storageBucket: "codespot-fecfe.appspot.com",
-  messagingSenderId: "764583121213",
-  appId: "1:764583121213:web:09134ce560a68946d97554",
+  apiKey: "AIzaSyBMXs2-TyO5NL9BGSCVaZZ00i0p-J_Kst8",
+  authDomain: "codespot-b834d.firebaseapp.com",
+  projectId: "codespot-b834d",
+  storageBucket: "codespot-b834d.appspot.com",
+  messagingSenderId: "536263703670",
+  appId: "1:536263703670:web:d79db8209747d8864a3357",
+  measurementId: "G-3JHT5VFXTG",
 };
 
 // Initialize Firebase

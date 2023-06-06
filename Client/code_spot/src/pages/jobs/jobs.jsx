@@ -12,7 +12,7 @@ const Jobs = () => {
     try {
       const contract = await window.tronWeb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
 
       const jobId = await contract.jobID().call();
       const jobs = [];

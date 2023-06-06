@@ -60,7 +60,7 @@ const BecomeAClient = () => {
       const tronweb = window.tronWeb;
       const contract = await window.tronWeb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       toast.loading("✍ Sign Transaction", {
         id: notify,
       });
@@ -99,7 +99,7 @@ const BecomeAClient = () => {
             <Link to="/explore">Explore</Link>
           </p>
           <p className="col-span-1 hover:text-white/50 transition-all duration-200 cursor-pointer">
-            <Link to="/becomeAFreelancer">FAQ</Link>
+            <Link to="/dashboard">FAQ</Link>
           </p>
           <p className="col-span-2 hover:text-white/50 transition-all duration-200 cursor-pointer">
             <Link to="/becomeAFreelancer">Become a freelancer</Link>

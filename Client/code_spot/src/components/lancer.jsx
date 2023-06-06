@@ -41,7 +41,7 @@ const Lancer = ({ details, job }) => {
             <img
               src={telegram}
               alt="telegram"
-              className=" self-center w-7 h-7 col-span-1"
+              className=" self-center w-7 h-7 col-span-1 -ml-2"
             />
             <img
               src={discord}

@@ -11,7 +11,7 @@ const FreelancerItems = ({ item }) => {
       <img
         src={item?.imgUrl || client}
         alt="client profile"
-        className="absolute"
+        className="absolute w-full h-full object-cover"
       />
       <div className="flex-1"></div>
       <div className="bg-black/60 px-2 py-2 z-50 cursor-pointer hover:bg-black/90 duration-200 transition-all">

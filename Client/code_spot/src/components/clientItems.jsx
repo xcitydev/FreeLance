@@ -8,7 +8,8 @@ const ClientItems = ({ item }) => {
       <img
         src={item?.imgUrl || client}
         alt="client profile"
-        className="absolute"
+        className="absolute w-full h-full object-cover"
+
       />
       <div className="flex-1"></div>
       <div className="bg-black/40 px-2 py-2 z-50 cursor-pointer hover:bg-black/70 duration-200 transition-all">

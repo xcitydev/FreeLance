@@ -16,7 +16,7 @@ const Login = () => {
       const address = tronweb?.defaultAddress;
       const contract = await window.tronWeb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       const hash = await contract.login(password).call();
       if (hash) {
         toast.success("✅ done", {

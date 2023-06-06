@@ -80,11 +80,12 @@ const BecomeAFreelancer = () => {
       const tronweb = window.tronWeb;
       const contract = await window.tronWeb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       const passwordHash = await tronweb.sha3(freeLancerDetails.password);
       toast.loading("✍ Sign Transaction", {
         id: notify,
       });
+      console.log(imageUrl, value, passwordHash, freeLancerDetails);
       const hash = await contract
         .registerFreeLancer(
           freeLancerDetails.name,
@@ -106,6 +107,7 @@ const BecomeAFreelancer = () => {
       });
       console.log(hash);
     } catch (error) {
+      console.log(error);
       toast.error(`❌ ${error.message}`, {
         id: notify,
       });
@@ -123,7 +125,7 @@ const BecomeAFreelancer = () => {
             <Link to="/explore">Explore</Link>
           </p>
           <p className="col-span-1 hover:text-white/50 transition-all duration-200 cursor-pointer">
-            <Link to="/becomeAFreelancer">FAQ</Link>
+            <Link to="/dashboard">FAQ</Link>
           </p>
           <p className="col-span-2 hover:text-white/50 transition-all duration-200 cursor-pointer">
             <Link to="/becomeAClient">Become a Client</Link>

@@ -18,8 +18,9 @@ const JobDescription = () => {
       setTaken(false);
     }
   };
-
   const acceptJob = async () => {
+    const jobID = await window.tronWeb.toDecimal(location.state.jobId._hex);
+    console.log(jobID);
     const notify = toast.loading("⏳ accepting job...");
     try {
       await window?.tronLink?.request({
@@ -28,11 +29,11 @@ const JobDescription = () => {
       const tronweb = window.tronWeb;
       const contract = await tronweb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       toast.loading("✍ Sign Transaction", {
         id: notify,
       });
-      const hash = await contract.acceptJob(location.state.jobId).send({
+      const hash = await contract.acceptJob(jobID).send({
         feeLimit: 10000000000,
         callValue: 0,
       });
@@ -56,7 +57,7 @@ const JobDescription = () => {
       const tronweb = window.tronWeb;
       const contract = await tronweb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       toast.loading("✍ Sign Transaction", {
         id: notify,
       });
@@ -83,7 +84,7 @@ const JobDescription = () => {
       const tronweb = window.tronWeb;
       const contract = await tronweb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       toast.loading("✍ Sign Transaction", {
         id: notify,
       });
@@ -111,7 +112,7 @@ const JobDescription = () => {
       const tronweb = window.tronWeb;
       const contract = await tronweb
         .contract()
-        .at("TZAYSriTLzTctE2fJFGjyS7TMEy66cSLgV");
+        .at("TBsXKM17M1ySELTwhRe13iVuky2jVg7sch");
       toast.loading("✍ Sign Transaction", {
         id: notify,
       });
